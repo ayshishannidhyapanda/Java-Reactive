@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group = 'com'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    logbackVersion = '1.4.14'
+    fakerVersion = '1.0.2'
+    junitVersion = '5.10.0'
+    reactorCoreVersion = '3.6.6'
+    reactorNettyVersion = '1.2.5'
+}
+
+
+dependencies {
+    implementation "io.projectreactor:reactor-core:${reactorCoreVersion}"
+    implementation "io.projectreactor.netty:reactor-netty-core:${reactorNettyVersion}"
+    implementation "io.projectreactor.netty:reactor-netty-http:${reactorNettyVersion}"
+    implementation 'org.springframework:spring-context:6.1.6'
+    implementation "com.github.javafaker:javafaker:${fakerVersion}"
+
+
+    implementation "com.github.javafaker:javafaker:${fakerVersion}"
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+    runtimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    testImplementation platform("org.junit:junit-bom:${junitVersion}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+}
+
+configurations.all {
+    exclude group: 'commons-logging', module: 'commons-logging'
+}
+
+
+test {
+    useJUnitPlatform()
+}

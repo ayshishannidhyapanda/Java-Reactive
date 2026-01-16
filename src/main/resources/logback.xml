@@ -1,0 +1,22 @@
+<configuration>
+
+    <!-- Keep only important logs -->
+    <logger name="io.netty" level="WARN"/>
+    <logger name="reactor.netty" level="WARN"/>
+    <logger name="reactor.util" level="WARN"/>
+
+    <!-- Show your own logs -->
+    <logger name="reactor.sec02" level="INFO"/>
+
+    <!-- Console Output Format -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

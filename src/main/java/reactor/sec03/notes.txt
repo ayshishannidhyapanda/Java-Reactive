@@ -1,0 +1,2 @@
+Mono and flux are not the data storage like list, it represents a tunnel/pipe through which data can be transferred
+from one place to another.

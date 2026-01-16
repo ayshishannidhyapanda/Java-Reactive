@@ -1,0 +1,11 @@
+Flux.create -> flux sink these are designed to be used when we have single subscriber approach.
+flux sink is thread safe
+we can emit data into sink w/o worrying about downstream demand
+it will deliver everything to subscriber safely
+
+ Flux generate
+    - invokes the given lambda expression again and again based on downstream demand.
+    - We can emit only one value at a time
+    - will stop when complete method is invoked
+    - will stop when error method is invoked
+    - will stop downstream cancels

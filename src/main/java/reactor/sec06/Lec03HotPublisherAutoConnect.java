@@ -27,6 +27,9 @@ public class Lec03HotPublisherAutoConnect {
 
 //        var movieFlux = movieStream().publish().autoConnect();
 
+        //autoConnect(1) is same as refCount(PREVIOUS ONE) but it doesn't stop when subscriber leaves
+        //autoConnect(0) REAL hot publisher no subscriber required
+
         var movieFlux = movieStream().publish().autoConnect(0);
 
         Util.sleepSeconds(2);

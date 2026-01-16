@@ -28,7 +28,7 @@ public class Lec02HotPublisher {
 
 //        var movieFlux = movieStream().share(); //now it works like movie theatre
 
-        //min subscriber needs to start emitting data, minimum should be 1
+        //min subscriber needs to start emitting data, minimum should be 1, and it stops when 0 subscriber remain
 //        var movieFlux = movieStream().share().publish().refCount(2);
 
         var movieFlux = movieStream().share();

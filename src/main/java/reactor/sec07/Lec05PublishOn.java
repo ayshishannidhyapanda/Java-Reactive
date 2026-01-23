@@ -15,13 +15,11 @@ import reactor.core.scheduler.Schedulers;
  *
  * Project: Java-Reactive
  * Author: Ayshi Shannidhya Panda
- * Created on: 19-01-2026
+ * Created on: 22-01-2026
  */
+public class Lec05PublishOn {
 
-//We can have multiple SubscribeOn.
-//The closest to the source will take the precedence
-public class Lec03MultipleSubscribeOn {
-    private static final Logger log = LoggerFactory.getLogger(Lec03MultipleSubscribeOn.class);
+    private static final Logger log = LoggerFactory.getLogger(Lec05PublishOn.class);
 
     public static void main(String[] args) throws InterruptedException {
         var flux = Flux.create(sink -> {
@@ -31,15 +29,11 @@ public class Lec03MultipleSubscribeOn {
                     }
                     sink.complete();
                 })
-                //we can have multiple subscribeOn method but the closest one to the producer end up doing all the task
-                //in this case Ankit is the closest one
-//                .subscribeOn(Schedulers.newParallel("Ankit"))
-
-                //Lets Use immediate()
-                .subscribeOn(Schedulers.immediate()) //it just continues the previous here that is bounded elastic
+                .publishOn(Schedulers.parallel())
                 .doOnNext(v -> log.info("value: {}", v))
                 .doFirst(() -> log.info("first1"))//run by bounded elastic thread
-                .subscribeOn(Schedulers.boundedElastic())//bounded elastic activate
+                //publishOn is for downstream and subscribeOn is for upstream
+                .publishOn(Schedulers.boundedElastic())//bounded elastic activate
                 .doFirst(() -> log.info("first2")); //thread-0 runnable
 
 

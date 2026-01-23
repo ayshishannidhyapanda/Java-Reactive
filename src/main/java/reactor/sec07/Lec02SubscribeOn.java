@@ -25,7 +25,7 @@ public class Lec02SubscribeOn {
 
         var flux = Flux.create(sink -> {
                     for (int i = 1; i < 3; i++) {
-                        log.info("generating: {}", 1);
+                        log.info("generating: {}", i);
                         sink.next(i);
                     }
                     sink.complete();

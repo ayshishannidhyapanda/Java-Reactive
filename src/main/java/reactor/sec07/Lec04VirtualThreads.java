@@ -15,15 +15,25 @@ import reactor.core.scheduler.Schedulers;
  *
  * Project: Java-Reactive
  * Author: Ayshi Shannidhya Panda
- * Created on: 19-01-2026
+ * Created on: 22-01-2026
  */
 
-//We can have multiple SubscribeOn.
-//The closest to the source will take the precedence
-public class Lec03MultipleSubscribeOn {
-    private static final Logger log = LoggerFactory.getLogger(Lec03MultipleSubscribeOn.class);
+/*  Reactor support virtual threads
+    System.setProperty("reactor.schedulers.defaultBoundedElasticVirtualThreads", "true");
+*/
+public class Lec04VirtualThreads {
+
+    private static final Logger log = LoggerFactory.getLogger(Lec04VirtualThreads.class);
+
+    //parallel thread pool are for CPU task(Not for parallel execution), virtual threads are not for CPU task
+    //virtual thread for time-consuming, IO, network calls for blocking operation,
+    // boundedElastic schedules tasks that MAY execute on virtual threads
+    // but subscription always happens on the caller thread
 
     public static void main(String[] args) throws InterruptedException {
+
+        System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
+
         var flux = Flux.create(sink -> {
                     for (int i = 1; i < 3; i++) {
                         log.info("generating: {}", i);
@@ -31,14 +41,9 @@ public class Lec03MultipleSubscribeOn {
                     }
                     sink.complete();
                 })
-                //we can have multiple subscribeOn method but the closest one to the producer end up doing all the task
-                //in this case Ankit is the closest one
-//                .subscribeOn(Schedulers.newParallel("Ankit"))
-
-                //Lets Use immediate()
-                .subscribeOn(Schedulers.immediate()) //it just continues the previous here that is bounded elastic
                 .doOnNext(v -> log.info("value: {}", v))
-                .doFirst(() -> log.info("first1"))//run by bounded elastic thread
+                .doFirst(() -> log.info("first1 - {}",
+                        Thread.currentThread().isVirtual()))//run by bounded elastic thread
                 .subscribeOn(Schedulers.boundedElastic())//bounded elastic activate
                 .doFirst(() -> log.info("first2")); //thread-0 runnable
 
@@ -49,4 +54,5 @@ public class Lec03MultipleSubscribeOn {
 
         Util.sleepSeconds(2);
     }
+
 }

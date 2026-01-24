@@ -39,7 +39,19 @@ public class Util {
         return faker;
     }
 
-    public static void sleepSeconds(int seconds) throws InterruptedException {
-        Thread.sleep(Duration.ofSeconds(seconds));
+    public static void sleepSeconds(int seconds) {
+        try {
+            Thread.sleep(Duration.ofSeconds(seconds));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void sleep(Duration duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

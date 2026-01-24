@@ -30,11 +30,7 @@ public class Lec09PublisherCreateVsExecution {
         log.info("Entered the method");
         return Mono.fromSupplier(() -> {
             log.info("Generating Name");
-            try {
-                Util.sleepSeconds(3);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            Util.sleepSeconds(3);
             return Util.faker().name().firstName();
         });
     }

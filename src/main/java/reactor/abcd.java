@@ -1,9 +1,6 @@
 package reactor;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /*
  * Copyright (c) 2026 Ayshi Shannidhya Panda. All rights reserved.
@@ -25,7 +22,7 @@ public class abcd {
                 int finalJ = j;
                 CompletableFuture.supplyAsync(() -> Thread.ofPlatform().start(() -> {
                     while (true) {
-                        
+
                     }
                 }));
             }

@@ -1,4 +1,4 @@
-package reactor;
+package reactor.example;
 
 import java.util.concurrent.CompletableFuture;
 

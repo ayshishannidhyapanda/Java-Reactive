@@ -39,7 +39,7 @@ public class SlackMember {
         this.messageConsumer.accept(message);
     }
 
-    void received(String message) {
+    void receives(String message) {
         log.info(message);
     }
 }

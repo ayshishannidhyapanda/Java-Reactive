@@ -20,11 +20,32 @@ public class Lec03FluxTest {
     public void fluxTest1() {
         StepVerifier.create(getItems(), 1)
                 .expectNext(1)
-                .verifyComplete(); //verifyComplete is equal to expectComplete() + verify()
+                .thenCancel()
+                .verify();
     }
 
     private Flux<Integer> getItems() {
         return Flux.just(1, 2, 3)
                 .log();
+    }
+
+    //verifyComplete is equal to expectComplete() + verify()
+
+    @Test
+    public void fluxTest2() {
+        StepVerifier.create(getItems())
+                .expectNext(1)
+                .expectNext(2)
+                .expectNext(3)
+                .expectComplete()
+                .verify();
+    }
+
+    @Test
+    public void fluxTest3() {
+        StepVerifier.create(getItems())
+                .expectNext(1, 2, 3)
+                .expectComplete()
+                .verify();
     }
 }
